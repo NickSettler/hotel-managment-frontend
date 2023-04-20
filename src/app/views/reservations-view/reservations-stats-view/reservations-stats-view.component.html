@@ -1,0 +1,38 @@
+<div
+  class="d-flex flex-column w-100"
+  *ngIf="
+    {
+      stats: reservationStats$ | async
+    };
+    let context
+  "
+>
+  <h4 class="mb-3">Reservations Statistics</h4>
+  <div class="mb-2" [formGroup]="statisticsForm">
+    <label for="year" class="form-label"> Year </label>
+    <select class="form-select" id="year" formControlName="year">
+      <option *ngFor="let year of years" [ngValue]="year">
+        {{ year }}
+      </option>
+    </select>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped-columns stats-table">
+      <tbody>
+        <tr>
+          <td>Month</td>
+          <td *ngFor="let item of context.stats">
+            {{ "1970-" + item.month + "-01" | date : "MMMM" }}
+            <i class="fas fa-fire"></i>
+          </td>
+        </tr>
+        <tr>
+          <td>Reservations</td>
+          <td *ngFor="let item of context.stats">
+            {{ item.count }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+@import "src/styles";
+
+.router-wrapper {
+  margin-left: $drawerWidth;
+
+  & router-outlet {
+    display: none;
+  }
+
+  & > * {
+    width: 100%;
+  }
+}

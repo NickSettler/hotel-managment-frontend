@@ -1,0 +1,47 @@
+<div class="container" [formGroup]="form">
+  <div class="row mb-2">
+    <div class="col">
+      <h4>Add Client</h4>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <label class="form-label" [for]="E_CLIENT_KEYS.PASSPORT_NUMBER">
+        Passport Number
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [id]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+        [formControlName]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+      />
+    </div>
+    <div class="col">
+      <label class="form-label" [for]="E_CLIENT_KEYS.FIRST_NAME">
+        First Name
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [id]="E_CLIENT_KEYS.FIRST_NAME"
+        [formControlName]="E_CLIENT_KEYS.FIRST_NAME"
+      />
+    </div>
+    <div class="col">
+      <label class="form-label" [for]="E_CLIENT_KEYS.LAST_NAME">
+        Last Name
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [id]="E_CLIENT_KEYS.LAST_NAME"
+        [formControlName]="E_CLIENT_KEYS.LAST_NAME"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-auto">
+      <button class="btn btn-primary" (click)="create()">Create</button>
+    </div>
+  </div>
+</div>

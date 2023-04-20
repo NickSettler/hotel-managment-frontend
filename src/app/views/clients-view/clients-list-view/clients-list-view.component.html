@@ -1,0 +1,36 @@
+<div
+  class="d-flex flex-column w-100"
+  *ngIf="
+    {
+      clients: clients$ | async
+    };
+    let context
+  "
+>
+  <div class="d-flex mb-2">
+    <div class="flex-grow-1"></div>
+    <a class="btn btn-primary" routerLink="/clients/new">Add New Client</a>
+  </div>
+  <table class="table table-striped table-responsive w-100">
+    <thead>
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Passport Number</th>
+        <th scope="col">Permanent Residence</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of context.clients">
+        <td>{{ client[E_CLIENT_KEYS.FIRST_NAME] }}</td>
+        <td>{{ client[E_CLIENT_KEYS.LAST_NAME] }}</td>
+        <td>{{ client[E_CLIENT_KEYS.PASSPORT_NUMBER] }}</td>
+        <td>{{ client[E_CLIENT_KEYS.PERMANENT_RESIDENCE] }}</td>
+        <td>{{ client[E_CLIENT_KEYS.PHONE_NUMBER] }}</td>
+        <td>{{ client[E_CLIENT_KEYS.EMAIL] }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
