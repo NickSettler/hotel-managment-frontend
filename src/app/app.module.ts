@@ -25,6 +25,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ReservationsViewComponent } from "./views/reservations-view/reservations-view.component";
 import { ReservationsStatsViewComponent } from "./views/reservations-view/reservations-stats-view/reservations-stats-view.component";
 import { ReservationsTableViewComponent } from "./views/reservations-view/reservations-table-view/reservations-table-view.component";
+import { LineChartComponent } from "./components/line-chart/line-chart.component";
+import { ChartDataTransformPipe } from "./pipes/chart-data-transform.pipe";
 
 const startUpFactory = (configService: ConfigService) => {
   return () => configService.load().then(() => console.log("Config loaded"));
@@ -79,6 +81,8 @@ const routes: Routes = [
     ReservationsViewComponent,
     ReservationsStatsViewComponent,
     ReservationsTableViewComponent,
+    LineChartComponent,
+    ChartDataTransformPipe,
   ],
   imports: [
     BrowserModule,
