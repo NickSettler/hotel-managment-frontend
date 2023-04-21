@@ -11,7 +11,7 @@
     <div class="flex-grow-1"></div>
     <a class="btn btn-primary" routerLink="/clients/new">Add New Client</a>
   </div>
-  <table class="table table-striped table-responsive w-100">
+  <table class="table table-striped table-responsive table-hover w-100">
     <thead>
       <tr>
         <th scope="col">First Name</th>
@@ -23,7 +23,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let client of context.clients">
+      <tr
+        *ngFor="let client of context.clients"
+        [routerLink]="['/clients/view', client[E_CLIENT_KEYS.PASSPORT_NUMBER]]"
+        role="button"
+      >
         <td>{{ client[E_CLIENT_KEYS.FIRST_NAME] }}</td>
         <td>{{ client[E_CLIENT_KEYS.LAST_NAME] }}</td>
         <td>{{ client[E_CLIENT_KEYS.PASSPORT_NUMBER] }}</td>
