@@ -1,7 +1,8 @@
 @import "src/styles";
+@import "node_modules/bootstrap/scss/bootstrap";
 
 .router-wrapper {
-  margin-left: $drawerWidth;
+  margin-left: calc($drawerWidth + map-get($spacers, 4));
 
   & router-outlet {
     display: none;
