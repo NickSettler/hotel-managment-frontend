@@ -74,40 +74,40 @@
             {{ context.client?.[E_CLIENT_KEYS.LAST_NAME] }}
           </span>
         </div>
-        <div class="col-3 d-flex flex-column">
+        <div class="col-4 d-flex flex-column">
           <span class="mb-1 h5">Date of Birth</span>
           <span>
             {{ context.client?.[E_CLIENT_KEYS.BIRTH_DATE] | date: 'dd/MM/yyyy' }}
           </span>
         </div>
-        <div class="col-3 d-flex flex-column">
+        <div class="col-4 d-flex flex-column">
           <span class="mb-1 h5">Email</span>
           <span>
             {{ context.client?.[E_CLIENT_KEYS.EMAIL] }}
           </span>
         </div>
-        <div class="col-3 d-flex flex-column">
+        <div class="col-4 d-flex flex-column">
           <span class="mb-1 h5">Phone</span>
           <span>
             {{ context.client?.[E_CLIENT_KEYS.PHONE_NUMBER] }}
           </span>
         </div>
-        <div class="col-3 d-flex flex-column">
-          <span class="mb-1 h5">Registration Date</span>
-          <span>
-            {{ context.client?.[E_CLIENT_KEYS.REGISTRATION_DATE] | date: 'dd/MM/yyyy' }}
-          </span>
-        </div>
-        <div class="col-6 d-flex flex-column">
+        <div class="col-4 d-flex flex-column">
           <span class="mb-1 h5">Permanent Residence</span>
           <span>
             {{ context.client?.[E_CLIENT_KEYS.PERMANENT_RESIDENCE] }}
           </span>
         </div>
-        <div class="col-6 d-flex flex-column">
+        <div class="col-4 d-flex flex-column">
           <span class="mb-1 h5">Temporary Residence</span>
           <span>
             {{ context.client?.[E_CLIENT_KEYS.TEMPORARY_RESIDENCE] }}
+          </span>
+        </div>
+        <div class="col-4 d-flex flex-column">
+          <span class="mb-1 h5">Registration Date</span>
+          <span>
+            {{ context.client?.[E_CLIENT_KEYS.REGISTRATION_DATE] | date: 'dd/MM/yyyy' }}
           </span>
         </div>
       </div>

@@ -1,0 +1,32 @@
+<div
+  class="d-flex flex-column w-100"
+  *ngIf="
+    {
+      suites: suites$ | async,
+      capacity: capacity$ | async
+    };
+    let context
+  "
+>
+  <h4 class="mb-4">Capacity</h4>
+  <div class="d-flex flex-column" [formGroup]="filterForm">
+    <div class="d-flex">
+      <div>
+        <label for="arrival" class="form-label"> Arrival </label>
+        <input type="date" class="form-control" id="arrival" name="arrival" />
+      </div>
+    </div>
+  </div>
+  <ul *ngIf="context.suites && context.capacity">
+    <li
+      *ngFor="
+        let item of context.capacity
+          | mapCollection : E_SUITE_KEYS.SUITE_NUMBER
+          | joinCollection : context.suites : E_SUITE_KEYS.SUITE_NUMBER
+      "
+    >
+      {{ item[E_SUITE_KEYS.SUITE_NUMBER] }} -
+      {{ item[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
+    </li>
+  </ul>
+</div>

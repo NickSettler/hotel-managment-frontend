@@ -33,6 +33,10 @@ import { FilterDataByFuncPipe } from "./pipes/filter-data-by-func.pipe";
 import { EmptyToNullDirective } from "./directives/empty-to-null.directive";
 import { InputMaskModule } from "@ngneat/input-mask";
 import { ErrorFormatterPipe } from "./pipes/error-formatter.pipe";
+import { SuitesViewComponent } from "./views/suites-view/suites-view.component";
+import { SuitesCapacityViewComponent } from "./views/suites-view/suites-capacity-view/suites-capacity-view.component";
+import { JoinCollectionPipe } from "./pipes/join-collection.pipe";
+import { MapCollectionPipe } from "./pipes/map-collection.pipe";
 
 const startUpFactory = (configService: ConfigService) => {
   return () => configService.load().then(() => console.log("Config loaded"));
@@ -80,6 +84,14 @@ const routes: Routes = [
     path: "reservations/stats",
     component: ReservationsStatsViewComponent,
   },
+  {
+    path: "suites",
+    component: SuitesViewComponent,
+  },
+  {
+    path: "suites/capacity",
+    component: SuitesCapacityViewComponent,
+  },
 ];
 
 @NgModule({
@@ -101,6 +113,10 @@ const routes: Routes = [
     FilterDataByFuncPipe,
     EmptyToNullDirective,
     ErrorFormatterPipe,
+    SuitesViewComponent,
+    SuitesCapacityViewComponent,
+    JoinCollectionPipe,
+    MapCollectionPipe,
   ],
   imports: [
     BrowserModule,
