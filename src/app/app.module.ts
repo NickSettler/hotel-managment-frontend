@@ -27,6 +27,10 @@ import { ReservationsStatsViewComponent } from "./views/reservations-view/reserv
 import { ReservationsTableViewComponent } from "./views/reservations-view/reservations-table-view/reservations-table-view.component";
 import { LineChartComponent } from "./components/line-chart/line-chart.component";
 import { ChartDataTransformPipe } from "./pipes/chart-data-transform.pipe";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { ClientViewComponent } from "./views/clients-view/clients-table-view/client-view/client-view.component";
+import { FilterDataByFuncPipe } from './pipes/filter-data-by-func.pipe';
+import { EmptyToNullDirective } from './directives/empty-to-null.directive';
 
 const startUpFactory = (configService: ConfigService) => {
   return () => configService.load().then(() => console.log("Config loaded"));
@@ -51,8 +55,16 @@ const routes: Routes = [
     component: ClientsTableViewComponent,
   },
   {
-    path: "clients/new",
+    path: "clients/form",
     component: ClientsFormComponent,
+  },
+  {
+    path: "clients/form/:passport",
+    component: ClientsFormComponent,
+  },
+  {
+    path: "clients/view/:passport",
+    component: ClientViewComponent,
   },
   {
     path: "reservations",
@@ -83,6 +95,9 @@ const routes: Routes = [
     ReservationsTableViewComponent,
     LineChartComponent,
     ChartDataTransformPipe,
+    ClientViewComponent,
+    FilterDataByFuncPipe,
+    EmptyToNullDirective,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +119,7 @@ const routes: Routes = [
     NgxMasonryModule,
     ReactiveFormsModule,
     FormsModule,
+    FontAwesomeModule,
   ],
   providers: [
     ConfigService,
