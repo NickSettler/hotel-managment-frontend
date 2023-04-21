@@ -1,5 +1,6 @@
 import { createAction } from "@ngrx/store";
 import { IClient } from "./clients.types";
+import { ICreateClientBody } from "../../services/clients.service";
 
 export const actionTypes = {
   GET_CLIENTS: "[Clients] Get Clients",
@@ -25,7 +26,9 @@ export const getClientsFailureAction = createAction(
 
 export const createClientAction = createAction(
   actionTypes.CREATE_CLIENT,
-  (payload: IClient) => ({ payload })
+  (payload: Partial<ICreateClientBody>) => ({
+    payload,
+  })
 );
 
 export const createClientSuccessAction = createAction(
