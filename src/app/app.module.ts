@@ -29,8 +29,10 @@ import { LineChartComponent } from "./components/line-chart/line-chart.component
 import { ChartDataTransformPipe } from "./pipes/chart-data-transform.pipe";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { ClientViewComponent } from "./views/clients-view/clients-table-view/client-view/client-view.component";
-import { FilterDataByFuncPipe } from './pipes/filter-data-by-func.pipe';
-import { EmptyToNullDirective } from './directives/empty-to-null.directive';
+import { FilterDataByFuncPipe } from "./pipes/filter-data-by-func.pipe";
+import { EmptyToNullDirective } from "./directives/empty-to-null.directive";
+import { InputMaskModule } from "@ngneat/input-mask";
+import { ErrorFormatterPipe } from "./pipes/error-formatter.pipe";
 
 const startUpFactory = (configService: ConfigService) => {
   return () => configService.load().then(() => console.log("Config loaded"));
@@ -98,6 +100,7 @@ const routes: Routes = [
     ClientViewComponent,
     FilterDataByFuncPipe,
     EmptyToNullDirective,
+    ErrorFormatterPipe,
   ],
   imports: [
     BrowserModule,
@@ -120,6 +123,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule,
+    InputMaskModule,
   ],
   providers: [
     ConfigService,

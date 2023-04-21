@@ -1,11 +1,11 @@
-<div class="container" [formGroup]="form">
+<form class="container" [formGroup]="form">
   <div class="row mb-2">
     <div class="col">
       <h4>Add Client</h4>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="col">
+  <div class="row g-3 mb-3">
+    <div class="col-4">
       <label class="form-label" [for]="E_CLIENT_KEYS.PASSPORT_NUMBER">
         Passport Number
       </label>
@@ -14,9 +14,19 @@
         class="form-control"
         [id]="E_CLIENT_KEYS.PASSPORT_NUMBER"
         [formControlName]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.PASSPORT_NUMBER)?.invalid &&
+          form.get(E_CLIENT_KEYS.PASSPORT_NUMBER)?.touched
+        "
       />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.PASSPORT_NUMBER)?.errors || null
+            | errorFormatter : "Passport Number"
+        }}
+      </div>
     </div>
-    <div class="col">
+    <div class="col-4">
       <label class="form-label" [for]="E_CLIENT_KEYS.FIRST_NAME">
         First Name
       </label>
@@ -25,9 +35,19 @@
         class="form-control"
         [id]="E_CLIENT_KEYS.FIRST_NAME"
         [formControlName]="E_CLIENT_KEYS.FIRST_NAME"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.FIRST_NAME)?.invalid &&
+          form.get(E_CLIENT_KEYS.FIRST_NAME)?.touched
+        "
       />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.FIRST_NAME)?.errors || null
+            | errorFormatter : "First Name"
+        }}
+      </div>
     </div>
-    <div class="col">
+    <div class="col-4">
       <label class="form-label" [for]="E_CLIENT_KEYS.LAST_NAME">
         Last Name
       </label>
@@ -36,12 +56,126 @@
         class="form-control"
         [id]="E_CLIENT_KEYS.LAST_NAME"
         [formControlName]="E_CLIENT_KEYS.LAST_NAME"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.LAST_NAME)?.invalid &&
+          form.get(E_CLIENT_KEYS.LAST_NAME)?.touched
+        "
       />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.LAST_NAME)?.errors || null
+            | errorFormatter : "Last Name"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label class="form-label" [for]="E_CLIENT_KEYS.BIRTH_DATE">
+        Birth Date
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [inputMask]="birthDateInputMask"
+        [id]="E_CLIENT_KEYS.BIRTH_DATE"
+        [formControlName]="E_CLIENT_KEYS.BIRTH_DATE"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.BIRTH_DATE)?.invalid &&
+          form.get(E_CLIENT_KEYS.BIRTH_DATE)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.BIRTH_DATE)?.errors || null
+            | errorFormatter : "Birth Date"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label class="form-label" [for]="E_CLIENT_KEYS.EMAIL"> Email </label>
+      <input
+        type="text"
+        class="form-control"
+        [id]="E_CLIENT_KEYS.EMAIL"
+        [formControlName]="E_CLIENT_KEYS.EMAIL"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.EMAIL)?.invalid &&
+          form.get(E_CLIENT_KEYS.EMAIL)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.EMAIL)?.errors || null
+            | errorFormatter : "Email"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label class="form-label" [for]="E_CLIENT_KEYS.PHONE_NUMBER">
+        Phone
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [id]="E_CLIENT_KEYS.PHONE_NUMBER"
+        [formControlName]="E_CLIENT_KEYS.PHONE_NUMBER"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.PHONE_NUMBER)?.invalid &&
+          form.get(E_CLIENT_KEYS.PHONE_NUMBER)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.PHONE_NUMBER)?.errors || null
+            | errorFormatter : "Phone"
+        }}
+      </div>
+    </div>
+    <div class="col-6">
+      <label class="form-label" [for]="E_CLIENT_KEYS.PERMANENT_RESIDENCE">
+        Permanent Residence
+      </label>
+      <textarea
+        class="form-control"
+        [id]="E_CLIENT_KEYS.PERMANENT_RESIDENCE"
+        [formControlName]="E_CLIENT_KEYS.PERMANENT_RESIDENCE"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.PERMANENT_RESIDENCE)?.invalid &&
+          form.get(E_CLIENT_KEYS.PERMANENT_RESIDENCE)?.touched
+        "
+      ></textarea>
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.PERMANENT_RESIDENCE)?.errors || null
+            | errorFormatter : "Permanent Residence"
+        }}
+      </div>
+    </div>
+    <div class="col-6">
+      <label class="form-label" [for]="E_CLIENT_KEYS.TEMPORARY_RESIDENCE">
+        Temporary Residence
+      </label>
+      <textarea
+        class="form-control"
+        [id]="E_CLIENT_KEYS.TEMPORARY_RESIDENCE"
+        [formControlName]="E_CLIENT_KEYS.TEMPORARY_RESIDENCE"
+        [class.is-invalid]="
+          form.get(E_CLIENT_KEYS.TEMPORARY_RESIDENCE)?.invalid &&
+          form.get(E_CLIENT_KEYS.TEMPORARY_RESIDENCE)?.touched
+        "
+      ></textarea>
+      <div class="invalid-feedback">
+        {{
+          form.get(E_CLIENT_KEYS.TEMPORARY_RESIDENCE)?.errors || null
+            | errorFormatter : "Temporary Residence"
+        }}
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-auto">
-      <button class="btn btn-primary" (click)="create()">Create</button>
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn btn-primary" type="button" (click)="create()">
+        Create
+      </button>
     </div>
   </div>
-</div>
+</form>
