@@ -7,11 +7,26 @@
     let context
   "
 >
-  <div class="d-flex mb-2">
-    <div class="flex-grow-1"></div>
+  <h4 class="mb-4">Clients Table</h4>
+  <div class="d-flex align-items-start justify-content-between mb-4">
+    <div class="d-flex" [formGroup]="filterForm">
+      <div>
+        <label [for]="E_CLIENT_KEYS.PASSPORT_NUMBER">Passport Number</label>
+        <input
+          type="text"
+          class="form-control"
+          [id]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+          [formControlName]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+          appEmptyToNull
+        />
+      </div>
+    </div>
     <a class="btn btn-primary" routerLink="/clients/form">Add New Client</a>
   </div>
-  <table class="table table-striped table-responsive table-hover w-100">
+  <table
+    class="table table-striped table-responsive table-hover w-100"
+    *ngIf="context.clients"
+  >
     <thead>
       <tr>
         <th scope="col">First Name</th>
@@ -24,7 +39,9 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let client of context.clients"
+        *ngFor="
+          let client of context.clients | filterDataByFunc : filterClientsFunc
+        "
         [routerLink]="['/clients/view', client[E_CLIENT_KEYS.PASSPORT_NUMBER]]"
         role="button"
       >
