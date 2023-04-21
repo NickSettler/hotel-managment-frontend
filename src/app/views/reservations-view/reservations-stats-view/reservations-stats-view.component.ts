@@ -6,6 +6,8 @@ import { getReservationsStats } from "../../../store/reservations/reservations.s
 import { getReservationsStatsAction } from "../../../store/reservations/reservations.actions";
 import { FormControl, FormGroup } from "@angular/forms";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { ChartData } from "chart.js";
+import { DatePipe } from "@angular/common";
 
 interface ReservationsStatsViewFormGroup {
   year: FormControl;
@@ -46,17 +48,18 @@ export class ReservationsStatsViewComponent implements OnInit {
       })
     );
 
-    this.reservationStats$.subscribe(console.log);
-
     this.statisticsForm
       .get("year")
       ?.valueChanges.pipe(untilDestroyed(this), debounceTime(500))
       .subscribe((year) => {
-        console.log(year);
         if (!year) return;
         this.store.dispatch(getReservationsStatsAction({ year }));
       });
   }
 
-  protected readonly Date = Date;
+  get graphLabelUpdateFunc(): (label: string) => string {
+    const datePipe = new DatePipe("en-US");
+
+    return (label: string) => datePipe.transform(`1970-${label}-01`, "MMM")!;
+  }
 }

@@ -7,14 +7,42 @@
     let context
   "
 >
-  <h4 class="mb-3">Reservations Statistics</h4>
-  <div class="mb-2" [formGroup]="statisticsForm">
+  <h4 class="mb-4">
+    Reservations Statistics - {{ statisticsForm.value.year }}
+  </h4>
+  <div class="mb-3" [formGroup]="statisticsForm">
     <label for="year" class="form-label"> Year </label>
     <select class="form-select" id="year" formControlName="year">
       <option *ngFor="let year of years" [ngValue]="year">
         {{ year }}
       </option>
     </select>
+  </div>
+  <div class="d-flex mb-3">
+    <div class="d-flex flex-column w-50">
+      <h5>Reservations per month</h5>
+      <app-line-chart
+        *ngIf="context.stats"
+        [id]="'reservations-per-month'"
+        name="Reservations per month"
+        [data]="
+          context.stats
+            | chartDataTransform : 'month' : 'count' : graphLabelUpdateFunc
+        "
+      ></app-line-chart>
+    </div>
+    <div class="d-flex flex-column w-50">
+      <h5>Revenue per month</h5>
+      <app-line-chart
+        *ngIf="context.stats"
+        [id]="'revenue-per-month'"
+        name="Revenue per month"
+        [data]="
+          context.stats
+            | chartDataTransform : 'month' : 'sum' : graphLabelUpdateFunc
+        "
+      ></app-line-chart>
+    </div>
   </div>
   <div class="table-responsive">
     <table class="table table-striped-columns stats-table">
@@ -30,6 +58,12 @@
           <td>Reservations</td>
           <td *ngFor="let item of context.stats">
             {{ item.count }}
+          </td>
+        </tr>
+        <tr>
+          <td>Revenue</td>
+          <td *ngFor="let item of context.stats">
+            {{ item.sum | currency : "CZK" : "symbol" : "1.2-2" }}
           </td>
         </tr>
       </tbody>
