@@ -18,7 +18,7 @@ import { NgxMasonryModule } from "ngx-masonry";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeViewClientsComponent } from "./views/home-view/home-view-clients/home-view-clients.component";
 import { ClientsViewComponent } from "./views/clients-view/clients-view.component";
-import { ClientsListViewComponent } from "./views/clients-view/clients-list-view/clients-list-view.component";
+import { ClientsTableViewComponent } from "./views/clients-view/clients-table-view/clients-table -view.component";
 import { ServicesViewComponent } from "./views/services-view/services-view.component";
 import { ClientsFormComponent } from "./views/clients-form/clients-form.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -48,7 +48,7 @@ const routes: Routes = [
   },
   {
     path: "clients/table",
-    component: ClientsListViewComponent,
+    component: ClientsTableViewComponent,
   },
   {
     path: "clients/new",
@@ -75,7 +75,7 @@ const routes: Routes = [
     DrawerComponent,
     HomeViewClientsComponent,
     ClientsViewComponent,
-    ClientsListViewComponent,
+    ClientsTableViewComponent,
     ServicesViewComponent,
     ClientsFormComponent,
     ReservationsViewComponent,
