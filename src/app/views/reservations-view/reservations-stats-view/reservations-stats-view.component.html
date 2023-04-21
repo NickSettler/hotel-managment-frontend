@@ -44,29 +44,62 @@
       ></app-line-chart>
     </div>
   </div>
-  <div class="table-responsive">
-    <table class="table table-striped-columns stats-table">
-      <tbody>
-        <tr>
-          <td>Month</td>
-          <td *ngFor="let item of context.stats">
+  <div class="d-flex flex-column mb-3">
+    <h5 class="mb-2">Summary</h5>
+    <div class="table-responsive">
+      <table class="table table-striped-columns stats-table">
+        <tbody>
+          <tr>
+            <td>Month</td>
+            <td *ngFor="let item of context.stats">
+              {{ "1970-" + item.month + "-01" | date : "MMMM" }}
+              <i class="fas fa-fire"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>Reservations</td>
+            <td *ngFor="let item of context.stats">
+              {{ item.count }}
+            </td>
+          </tr>
+          <tr>
+            <td>Revenue</td>
+            <td *ngFor="let item of context.stats">
+              {{ item.sum | currency : "CZK" : "symbol" : "1.2-2" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="container-fluid p-0" *ngIf="context.stats">
+    <div class="row">
+      <div class="col-6">
+        <h5 class="mb-2">Popular months</h5>
+        <ul class="list-group w-100">
+          <li
+            class="list-group-item"
+            *ngFor="
+              let item of context.stats | filterDataByFunc : hotFilterFunc
+            "
+          >
             {{ "1970-" + item.month + "-01" | date : "MMMM" }}
-            <i class="fas fa-fire"></i>
-          </td>
-        </tr>
-        <tr>
-          <td>Reservations</td>
-          <td *ngFor="let item of context.stats">
-            {{ item.count }}
-          </td>
-        </tr>
-        <tr>
-          <td>Revenue</td>
-          <td *ngFor="let item of context.stats">
-            {{ item.sum | currency : "CZK" : "symbol" : "1.2-2" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <h5 class="mb-2">Unpopular months</h5>
+        <ul class="list-group w-100">
+          <li
+            class="list-group-item"
+            *ngFor="
+              let item of context.stats | filterDataByFunc : coldFilterFunc
+            "
+          >
+            {{ "1970-" + item.month + "-01" | date : "MMMM" }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

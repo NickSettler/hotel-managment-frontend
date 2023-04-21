@@ -62,4 +62,12 @@ export class ReservationsStatsViewComponent implements OnInit {
 
     return (label: string) => datePipe.transform(`1970-${label}-01`, "MMM")!;
   }
+
+  get hotFilterFunc(): (value: IReservationStats) => boolean {
+    return (value: IReservationStats) => value.isHot;
+  }
+
+  get coldFilterFunc(): (value: IReservationStats) => boolean {
+    return (value: IReservationStats) => value.isCold;
+  }
 }
