@@ -31,12 +31,16 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { ClientViewComponent } from "./views/clients-view/clients-table-view/client-view/client-view.component";
 import { FilterDataByFuncPipe } from "./pipes/filter-data-by-func.pipe";
 import { EmptyToNullDirective } from "./directives/empty-to-null.directive";
-import { InputMaskModule } from "@ngneat/input-mask";
 import { ErrorFormatterPipe } from "./pipes/error-formatter.pipe";
 import { SuitesViewComponent } from "./views/suites-view/suites-view.component";
 import { SuitesCapacityViewComponent } from "./views/suites-view/suites-capacity-view/suites-capacity-view.component";
 import { JoinCollectionPipe } from "./pipes/join-collection.pipe";
 import { MapCollectionPipe } from "./pipes/map-collection.pipe";
+import { SuitesTableViewComponent } from "./views/suites-view/suites-table-view/suites-table-view.component";
+import { SuiteViewComponent } from "./views/suites-view/suites-table-view/suite-view/suite-view.component";
+import { FindCollectionPipe } from "./pipes/find-collection.pipe";
+import { StopPropagationDirective } from "./directives/stop-propagation.directive";
+import { SuiteDropdownMenuComponent } from "./components/suite-dropdown-menu/suite-dropdown-menu.component";
 
 const startUpFactory = (configService: ConfigService) => {
   return () => configService.load().then(() => console.log("Config loaded"));
@@ -85,12 +89,24 @@ const routes: Routes = [
     component: ReservationsStatsViewComponent,
   },
   {
+    path: "reservations/:id",
+    component: ReservationsTableViewComponent,
+  },
+  {
     path: "suites",
     component: SuitesViewComponent,
   },
   {
     path: "suites/capacity",
     component: SuitesCapacityViewComponent,
+  },
+  {
+    path: "suites/table",
+    component: SuitesTableViewComponent,
+  },
+  {
+    path: "suites/:suiteNumber",
+    component: SuiteViewComponent,
   },
 ];
 
@@ -117,6 +133,11 @@ const routes: Routes = [
     SuitesCapacityViewComponent,
     JoinCollectionPipe,
     MapCollectionPipe,
+    SuitesTableViewComponent,
+    SuiteViewComponent,
+    FindCollectionPipe,
+    StopPropagationDirective,
+    SuiteDropdownMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -139,7 +160,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule,
-    InputMaskModule,
   ],
   providers: [
     ConfigService,
