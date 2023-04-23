@@ -3,30 +3,116 @@
   *ngIf="
     {
       suites: suites$ | async,
-      capacity: capacity$ | async
+      occupiedCapacity: occupiedCapacity$ | async,
+      availableCapacity: availableCapacity$ | async,
     };
     let context
   "
 >
   <h4 class="mb-4">Capacity</h4>
-  <div class="d-flex flex-column" [formGroup]="filterForm">
-    <div class="d-flex">
-      <div>
+  <form
+    class="container-fluid mb-4 p-0"
+    (submit)="getCapacity($event)"
+    [formGroup]="filterForm"
+  >
+    <div class="row g-2">
+      <div class="col-6">
         <label for="arrival" class="form-label"> Arrival </label>
-        <input type="date" class="form-control" id="arrival" name="arrival" />
+        <input
+          type="date"
+          class="form-control"
+          id="arrival"
+          name="arrival"
+          formControlName="arrival"
+          [class.is-invalid]="
+            filterForm.get('arrival')?.invalid &&
+            filterForm.get('arrival')?.touched
+          "
+        />
+        <div class="invalid-feedback">Arrival date is required</div>
+      </div>
+      <div class="col-6">
+        <label for="departure" class="form-label"> Departure </label>
+        <input
+          type="date"
+          class="form-control"
+          id="departure"
+          name="departure"
+          formControlName="departure"
+          [class.is-invalid]="
+            filterForm.get('departure')?.invalid &&
+            filterForm.get('departure')?.touched
+          "
+        />
+        <div class="invalid-feedback">Departure date is required</div>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+      </div>
+    </div>
+  </form>
+  <div
+    class="container-fluid p-0"
+    *ngIf="
+      context.suites &&
+      context.suites.length &&
+      context.occupiedCapacity &&
+      context.occupiedCapacity.length &&
+      context.availableCapacity &&
+      context.availableCapacity.length
+    "
+  >
+    <div class="row">
+      <div class="col-6">
+        <h5 class="mb-4">Occupied ({{ context.occupiedCapacity.length }})</h5>
+        <div class="list-group">
+          <button
+            type="button"
+            *ngFor="
+              let item of context.occupiedCapacity
+                | mapCollection : E_SUITE_KEYS.SUITE_NUMBER
+                | joinCollection : context.suites : E_SUITE_KEYS.SUITE_NUMBER
+            "
+            [routerLink]="['/suites', item[E_SUITE_KEYS.SUITE_NUMBER]]"
+            class="list-group-item list-group-item-action d-flex justify-content-between"
+          >
+            <span>
+              {{ item[E_SUITE_KEYS.SUITE_NUMBER] }} -
+              {{ item[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
+            </span>
+            <fa-icon
+              class="list-icon"
+              [icon]="faArrowUpRightFromSquare"
+              size="sm"
+            ></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-6">
+        <h5 class="mb-4">Available ({{ context.availableCapacity.length }})</h5>
+        <div class="list-group">
+          <button
+            type="button"
+            *ngFor="
+              let item of context.availableCapacity
+                | mapCollection : E_SUITE_KEYS.SUITE_NUMBER
+                | joinCollection : context.suites : E_SUITE_KEYS.SUITE_NUMBER
+            "
+            [routerLink]="['/suites', item[E_SUITE_KEYS.SUITE_NUMBER]]"
+            class="list-group-item list-group-item-action d-flex justify-content-between"
+          >
+            <span>
+              {{ item[E_SUITE_KEYS.SUITE_NUMBER] }} -
+              {{ item[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
+            </span>
+            <fa-icon
+              class="list-icon"
+              [icon]="faArrowUpRightFromSquare"
+              size="sm"
+            ></fa-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-  <ul *ngIf="context.suites && context.capacity">
-    <li
-      *ngFor="
-        let item of context.capacity
-          | mapCollection : E_SUITE_KEYS.SUITE_NUMBER
-          | joinCollection : context.suites : E_SUITE_KEYS.SUITE_NUMBER
-      "
-    >
-      {{ item[E_SUITE_KEYS.SUITE_NUMBER] }} -
-      {{ item[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
-    </li>
-  </ul>
 </div>
