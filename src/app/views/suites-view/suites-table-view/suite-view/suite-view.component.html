@@ -1,0 +1,136 @@
+<div
+  class="d-flex flex-column w-100"
+  *ngIf="
+    {
+      suite: suite$ | async,
+      reservations: reservations$ | async,
+      clients: clients$ | async
+    };
+    let context
+  "
+>
+  <div
+    class="d-flex mb-4 align-items-start justify-content-between"
+    *ngIf="context.suite"
+  >
+    <span class="display-6">
+      Suite {{ context.suite[E_SUITE_KEYS.SUITE_NUMBER] }}
+      <fa-icon
+        [icon]="
+          context.suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+            ? faLockOpen
+            : faLock
+        "
+        size="2xs"
+        [ngbTooltip]="
+          context.suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+            ? 'Available'
+            : 'Unavailable'
+        "
+        [style.color]="
+          context.suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+            ? 'var(--bs-success)'
+            : 'var(--bs-danger)'
+        "
+        placement="right"
+        tooltipClass="ms-3"
+      ></fa-icon>
+    </span>
+    <app-suite-dropdown-menu [suite]="context.suite"></app-suite-dropdown-menu>
+  </div>
+  <div class="d-flex flex-column mb-4 w-100 mb-4" *ngIf="context.suite">
+    <h4 class="mb-3">Suite Information</h4>
+    <div class="container-fluid p-0 mb-4">
+      <div class="row g-3">
+        <div class="col-2 d-flex flex-column">
+          <span class="mb-1 h5">Suite Number</span>
+          <span>
+            {{ context.suite[E_SUITE_KEYS.SUITE_NUMBER] }}
+          </span>
+        </div>
+        <div class="col-2 d-flex flex-column">
+          <span class="mb-1 h5">Suite Type</span>
+          <span>
+            {{ context.suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
+          </span>
+        </div>
+        <div class="col-2 d-flex flex-column">
+          <span class="mb-1 h5">Capacity</span>
+          <span>
+            {{
+              context.suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.CAPACITY]
+            }}
+          </span>
+        </div>
+        <div class="col-2 d-flex flex-column">
+          <span class="mb-1 h5">Price</span>
+          <span>
+            {{
+              context.suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.PRICE]
+                | currency : "CZK" : "symbol" : "1.2-2"
+            }}
+          </span>
+        </div>
+        <div class="col-2 d-flex flex-column">
+          <span class="mb-1 h5">Rooms Count</span>
+          <span>
+            {{
+              context.suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.SPEC][
+                E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT
+              ]
+            }}
+          </span>
+        </div>
+        <div class="col-2 d-flex flex-column">
+          <span class="mb-1 h5">Beds Count</span>
+          <span>
+            {{
+              context.suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.SPEC][
+                E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT
+              ]
+            }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="container-fluid p-0"
+      *ngIf="context.reservations && context.suite && context.clients"
+    >
+      <div class="row">
+        <div class="col-6">
+          <h4 class="mb-3">Suite Reservations</h4>
+          <ul class="list-group">
+            <a
+              [routerLink]="['/reservations', item[E_RESERVATION_KEYS.ID]]"
+              *ngFor="
+                let item of context.reservations
+                  | filterDataByFunc
+                    : getFilterReservationsFunc(
+                        context.suite[E_SUITE_KEYS.SUITE_NUMBER]
+                      )
+              "
+              class="list-group-item list-group-item-action"
+            >
+              <h6 class="mb-1">
+                {{
+                  formatClient(
+                    context.clients
+                      | findCollection
+                        : E_CLIENT_KEYS.PASSPORT_NUMBER
+                        : item[E_RESERVATION_KEYS.CLIENT_PASSPORT]
+                  )
+                }}
+              </h6>
+              <span>
+                {{ item[E_RESERVATION_KEYS.ARRIVAL] | date : "mediumDate" }}
+                -
+                {{ item[E_RESERVATION_KEYS.DEPARTURE] | date : "mediumDate" }}
+              </span>
+            </a>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

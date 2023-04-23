@@ -1,0 +1,108 @@
+<div
+  class="d-flex flex-column w-100"
+  *ngIf="
+    {
+      suites: suites$ | async
+    };
+    let context
+  "
+>
+  <h4 class="mb-4">Suites Table</h4>
+  <div class="d-flex justify-content-between mb-4" [formGroup]="filterForm">
+    <div class="d-flex">
+      <div>
+        <label for="suiteNumber" class="form-label">Suite Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="suiteNumber"
+          formControlName="suiteNumber"
+          appEmptyToNull
+        />
+      </div>
+    </div>
+  </div>
+  <div class="table-container overflow-x-auto w-100" *ngIf="context.suites">
+    <table class="table table-hover table-striped align-middle">
+      <thead>
+        <tr>
+          <td></td>
+          <td>Suite Number</td>
+          <td>Suite Type</td>
+          <td>Capacity</td>
+          <td>Price</td>
+          <td>Rooms Count</td>
+          <td>Beds Count</td>
+          <td>Actions</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let suite of context.suites | filterDataByFunc : filterSuitesFunc
+          "
+          [routerLink]="['/suites', suite[E_SUITE_KEYS.SUITE_NUMBER]]"
+          role="button"
+        >
+          <td>
+            <fa-icon
+              [icon]="
+                suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+                  ? faLockOpen
+                  : faLock
+              "
+              size="2xs"
+              [ngbTooltip]="
+                suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+                  ? 'Available'
+                  : 'Unavailable'
+              "
+              [style.color]="
+                suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+                  ? 'var(--bs-success)'
+                  : 'var(--bs-danger)'
+              "
+              placement="bottom"
+              tooltipClass="mt-2"
+            ></fa-icon>
+          </td>
+          <td>
+            {{ suite[E_SUITE_KEYS.SUITE_NUMBER] }}
+          </td>
+          <td>
+            {{ suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
+          </td>
+          <td>
+            {{ suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.CAPACITY] }}
+          </td>
+          <td>
+            {{
+              suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.PRICE]
+                | currency : "CZK" : "symbol" : "1.2-2"
+            }}
+          </td>
+          <td>
+            {{
+              suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.SPEC][
+                E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT
+              ]
+            }}
+          </td>
+          <td>
+            {{
+              suite[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.SPEC][
+                E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT
+              ]
+            }}
+          </td>
+          <td appStopPropagation>
+            <app-suite-dropdown-menu
+              [suite]="suite"
+              [isSmall]="true"
+            ></app-suite-dropdown-menu>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

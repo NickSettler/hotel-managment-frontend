@@ -1,0 +1,47 @@
+<div
+  class="btn-group"
+  [class.btn-group-sm]="isSmall"
+  ngbDropdown
+  placement="bottom-right"
+  #myDrop="ngbDropdown"
+  *ngIf="suite"
+>
+  <button
+    type="button"
+    class="btn btn-primary"
+    routerLink="/clients/form"
+    [queryParams]="{
+      passport: suite[E_SUITE_KEYS.SUITE_NUMBER]
+    }"
+  >
+    Edit
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+    aria-expanded="false"
+    ngbDropdownAnchor
+    (focus)="myDrop.open()"
+  >
+    <span class="visually-hidden">Toggle Dropdown</span>
+  </button>
+  <div class="dropdown-menu" ngbDropdownMenu>
+    <button
+      ngbDropdownItem
+      (click)="
+        handleSuiteStatusChange(
+          suite[E_SUITE_KEYS.SUITE_NUMBER],
+          suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+            ? E_SUITE_STATUS.NOT_AVAILABLE
+            : E_SUITE_STATUS.AVAILABLE
+        )
+      "
+    >
+      {{
+        suite[E_SUITE_KEYS.SUITE_STATUS] === E_SUITE_STATUS.AVAILABLE
+          ? "Make Unavailable"
+          : "Make Available"
+      }}
+    </button>
+  </div>
+</div>
