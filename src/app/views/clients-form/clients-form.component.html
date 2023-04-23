@@ -1,4 +1,13 @@
-<form class="container" [formGroup]="form">
+<form
+  class="container"
+  [formGroup]="form"
+  *ngIf="
+    {
+      currentClient: currentClient$ | async
+    };
+    let context
+  "
+>
   <div class="row mb-2">
     <div class="col">
       <h4>Add Client</h4>
@@ -12,12 +21,14 @@
       <input
         type="text"
         class="form-control"
+        [name]="E_CLIENT_KEYS.PASSPORT_NUMBER"
         [id]="E_CLIENT_KEYS.PASSPORT_NUMBER"
         [formControlName]="E_CLIENT_KEYS.PASSPORT_NUMBER"
         [class.is-invalid]="
           form.get(E_CLIENT_KEYS.PASSPORT_NUMBER)?.invalid &&
           form.get(E_CLIENT_KEYS.PASSPORT_NUMBER)?.touched
         "
+        [readonly]="!!context.currentClient"
       />
       <div class="invalid-feedback">
         {{
@@ -73,9 +84,8 @@
         Birth Date
       </label>
       <input
-        type="text"
+        type="date"
         class="form-control"
-        [inputMask]="birthDateInputMask"
         [id]="E_CLIENT_KEYS.BIRTH_DATE"
         [formControlName]="E_CLIENT_KEYS.BIRTH_DATE"
         [class.is-invalid]="
@@ -173,8 +183,8 @@
   </div>
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
-      <button class="btn btn-primary" type="button" (click)="create()">
-        Create
+      <button class="btn btn-primary" type="submit" (click)="handle()">
+        {{ context.currentClient ? "Update" : "Create" }}
       </button>
     </div>
   </div>

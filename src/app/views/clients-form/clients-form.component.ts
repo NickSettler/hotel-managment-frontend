@@ -1,18 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import { map, Observable, switchMap } from "rxjs";
 import { E_CLIENT_KEYS, IClient } from "../../store/clients/clients.types";
 import { getClients } from "../../store/clients/clients.selectors";
 import {
   createClientAction,
   createClientSuccessAction,
   getClientsAction,
+  updateClientAction,
 } from "../../store/clients/clients.actions";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { createMask } from "@ngneat/input-mask";
 import { Actions, ofType } from "@ngrx/effects";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { omit } from "lodash";
 
 interface IClientForm {
   [E_CLIENT_KEYS.PASSPORT_NUMBER]: FormControl<string>;
@@ -35,18 +36,10 @@ export class ClientsFormComponent implements OnInit {
   E_CLIENT_KEYS = E_CLIENT_KEYS;
   form: FormGroup<IClientForm>;
 
-  birthDateInputMask = createMask<string>({
-    alias: "datetime",
-    inputFormat: "dd.mm.yyyy",
-    parser: (value: string) => {
-      const [day, month, year] = value.split(".");
-      return `${year}-${month}-${day}`;
-    },
-  });
-
   constructor(
     private readonly store: Store,
     private readonly actions: Actions,
+    private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {
     this.form = new FormGroup<IClientForm>({
@@ -85,7 +78,23 @@ export class ClientsFormComponent implements OnInit {
     });
   }
 
-  $clients: Observable<Array<IClient>> = this.store.select(getClients);
+  clients$: Observable<Array<IClient>> = this.store.select(getClients);
+
+  currentClient$: Observable<IClient | null> = this.route.queryParams.pipe(
+    untilDestroyed(this),
+    switchMap((params) =>
+      this.clients$.pipe(map((clients) => ({ params, clients })))
+    ),
+    map(({ params, clients }) => {
+      if (!params["passport"] || !clients.length) return null;
+
+      const client = clients.find(
+        (client) => client[E_CLIENT_KEYS.PASSPORT_NUMBER] === params["passport"]
+      );
+
+      return client || null;
+    })
+  );
 
   ngOnInit(): void {
     this.store.dispatch(getClientsAction());
@@ -96,9 +105,28 @@ export class ClientsFormComponent implements OnInit {
         this.form.reset();
         this.router.navigate(["/clients"]);
       });
+
+    this.currentClient$.pipe(untilDestroyed(this)).subscribe((client) => {
+      if (!client) return;
+
+      this.form.patchValue(omit(client, E_CLIENT_KEYS.REGISTRATION_DATE));
+    });
   }
 
-  create() {
-    this.store.dispatch(createClientAction(this.form.value));
+  handle() {
+    if (this.form.invalid) return;
+
+    console.log(this.form.value);
+
+    this.currentClient$.pipe(untilDestroyed(this)).subscribe((client) => {
+      if (!client) this.store.dispatch(createClientAction(this.form.value));
+      else
+        this.store.dispatch(
+          updateClientAction({
+            passport: client[E_CLIENT_KEYS.PASSPORT_NUMBER],
+            client: omit(this.form.value, E_CLIENT_KEYS.PASSPORT_NUMBER),
+          })
+        );
+    });
   }
 }
