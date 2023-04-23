@@ -9,7 +9,10 @@ import {
 const initialState: ISuitesState = {
   suites: [],
   suiteTypes: [],
-  capacity: [],
+  capacity: {
+    occupied: [],
+    available: [],
+  },
 };
 
 export const SuitesReducer = createReducer(

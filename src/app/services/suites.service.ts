@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
 import { Observable } from "rxjs";
-import { ICapacity, ISuite } from "../store/suites/suites.types";
+import {
+  E_SUITE_STATUS,
+  ICapacity,
+  ISuite,
+} from "../store/suites/suites.types";
 import { E_RESERVATION_KEYS } from "../store/reservations/reservations.types";
 
 @Injectable({
@@ -30,6 +34,15 @@ export class SuitesService {
 
     return this.apiService.get({
       path: `${SuitesService.PATH}/capacity?${params.toString()}`,
+    });
+  }
+
+  setSuiteStatus(
+    suiteNumber: number,
+    status: E_SUITE_STATUS
+  ): Observable<ISuite> {
+    return this.apiService.post({
+      path: `${SuitesService.PATH}/${suiteNumber}/${status}`,
     });
   }
 }

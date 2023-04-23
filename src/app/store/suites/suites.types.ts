@@ -1,7 +1,10 @@
 export interface ISuitesState {
   suites: Array<ISuite>;
   suiteTypes: Array<ISuiteType>;
-  capacity: Array<ICapacity>;
+  capacity: {
+    occupied: Array<ICapacity>;
+    available: Array<ICapacity>;
+  };
 }
 
 export enum E_SUITE_STATUS {
