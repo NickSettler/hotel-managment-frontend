@@ -37,6 +37,7 @@
           <td>Suite Number</td>
           <td>Arrival Date</td>
           <td>Departure Date</td>
+          <td>Sum</td>
           <td>Payment Method</td>
         </tr>
       </thead>
@@ -46,6 +47,7 @@
             let reservation of context.reservations
               | filterDataByFunc : filterFunc
           "
+          role="button"
         >
           <td>
             {{ reservation[E_RESERVATION_KEYS.CLIENT_PASSPORT] }}
@@ -59,7 +61,18 @@
               <fa-icon [icon]="faArrowUpRightFromSquare" size="xs"></fa-icon>
             </a>
           </td>
-          <td>{{ reservation[E_RESERVATION_KEYS.SUITE_NUMBER] }}</td>
+          <td>
+            {{ reservation[E_RESERVATION_KEYS.SUITE_NUMBER] }}
+            <a
+              [routerLink]="[
+                '/suites',
+                reservation[E_RESERVATION_KEYS.SUITE_NUMBER]
+              ]"
+              class="icon-link ms-2"
+            >
+              <fa-icon [icon]="faArrowUpRightFromSquare" size="xs"></fa-icon>
+            </a>
+          </td>
           <td>
             {{ reservation[E_RESERVATION_KEYS.ARRIVAL] | date : "dd/MM/yyyy" }}
           </td>
@@ -68,6 +81,7 @@
               reservation[E_RESERVATION_KEYS.DEPARTURE] | date : "dd/MM/yyyy"
             }}
           </td>
+          <td>{{ reservation[E_RESERVATION_KEYS.SUM] | currency : "CZK" }}</td>
           <td>{{ reservation[E_RESERVATION_KEYS.PAYMENT_OPTION] }}</td>
         </tr>
       </tbody>
