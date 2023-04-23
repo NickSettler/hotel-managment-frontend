@@ -7,6 +7,7 @@ import {
   getClientsAction,
   getClientsFailureAction,
   getClientsSuccessAction,
+  updateClientAction,
 } from "./clients.actions";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { Store } from "@ngrx/store";
@@ -36,6 +37,21 @@ export class ClientsEffects {
       ofType(createClientAction),
       mergeMap(({ payload }) =>
         this.clientsService.createClient(payload).pipe(
+          map(() => {
+            getClientsAction();
+            return createClientSuccessAction();
+          }),
+          catchError((error) => of(getClientsFailureAction({ error })))
+        )
+      )
+    );
+  });
+
+  updateClient$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(updateClientAction),
+      mergeMap(({ payload }) =>
+        this.clientsService.updateClient(payload.passport, payload.client).pipe(
           map(() => {
             getClientsAction();
             return createClientSuccessAction();

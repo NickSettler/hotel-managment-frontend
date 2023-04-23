@@ -10,6 +10,10 @@ export const actionTypes = {
   CREATE_CLIENT: "[Clients] Create Client",
   CREATE_CLIENT_SUCCESS: "[Clients] Create Client Success",
   CREATE_CLIENT_FAILURE: "[Clients] Create Client Failure",
+
+  UPDATE_CLIENT: "[Clients] Update Client",
+  UPDATE_CLIENT_SUCCESS: "[Clients] Update Client Success",
+  UPDATE_CLIENT_FAILURE: "[Clients] Update Client Failure",
 };
 
 export const getClientsAction = createAction(actionTypes.GET_CLIENTS);
@@ -37,5 +41,21 @@ export const createClientSuccessAction = createAction(
 
 export const createClientFailureAction = createAction(
   actionTypes.CREATE_CLIENT_FAILURE,
+  (payload: { error: Error }) => ({ payload })
+);
+
+export const updateClientAction = createAction(
+  actionTypes.UPDATE_CLIENT,
+  (payload: { passport: string; client: Partial<ICreateClientBody> }) => ({
+    payload,
+  })
+);
+
+export const updateClientSuccessAction = createAction(
+  actionTypes.UPDATE_CLIENT_SUCCESS
+);
+
+export const updateClientFailureAction = createAction(
+  actionTypes.UPDATE_CLIENT_FAILURE,
   (payload: { error: Error }) => ({ payload })
 );
