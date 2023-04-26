@@ -8,7 +8,7 @@ import { Store } from "@ngrx/store";
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  title = "untitled";
+  title = "Hotel Management";
 
   constructor(private readonly store: Store) {}
 }
