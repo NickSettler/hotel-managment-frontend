@@ -1,15 +1,9 @@
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import {
-  createFeatureSelector,
-  createSelector,
-  MemoizedSelector,
-} from "@ngrx/store";
-import { IClientsState } from "../clients/clients.types";
-import {
+  E_RESERVATION_KEYS,
   IReservation,
   IReservationsState,
-  IReservationStats,
 } from "./reservations.types";
-import { IAppState } from "../app.reducers";
 
 export type TGetReservationsStatsProps = {
   year: number;
@@ -27,3 +21,11 @@ export const getReservationsStats = createSelector(
   getReservationsState,
   (state: IReservationsState) => state.stats
 );
+
+export const getReservationForClient = (passport: string) =>
+  createSelector(getReservations, (reservations: Array<IReservation>) =>
+    reservations.filter(
+      (reservation) =>
+        reservation[E_RESERVATION_KEYS.CLIENT_PASSPORT] === passport
+    )
+  );

@@ -8,7 +8,6 @@ import {
 } from "../../../store/reservations/reservations.types";
 import {
   faArrowUpRightFromSquare,
-  faEdit,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FormControl, FormGroup } from "@angular/forms";

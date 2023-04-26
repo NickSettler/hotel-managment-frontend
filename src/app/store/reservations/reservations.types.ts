@@ -18,6 +18,13 @@ export enum RESERVATION_ENTITY_PAYMENT_OPTION {
   CARD = "CARD",
 }
 
+export enum E_RESERVATION_STATUS {
+  PAST = "PAST",
+  CURRENT = "CURRENT",
+  UPCOMING = "UPCOMING",
+  UNKNOWN = "UNKNOWN",
+}
+
 export interface IReservation {
   [E_RESERVATION_KEYS.ID]: number;
   [E_RESERVATION_KEYS.CLIENT_PASSPORT]: string;

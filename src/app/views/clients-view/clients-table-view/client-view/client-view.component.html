@@ -2,7 +2,9 @@
   class="d-flex flex-column w-100"
   *ngIf="
     {
-      client: client$ | async
+      client: client$ | async,
+      clientReservations: clientReservations$ | async,
+      suites: suites$ | async
     };
     let context
   "
@@ -20,7 +22,14 @@
       placement="bottom-right"
       #myDrop="ngbDropdown"
     >
-      <button type="button" class="btn btn-primary">Edit</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        routerLink="/clients/form"
+        [queryParams]="{ passport: context.client?.[E_CLIENT_KEYS.PASSPORT_NUMBER] }"
+      >
+        Edit
+      </button>
       <button
         type="button"
         class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -109,6 +118,57 @@
           <span>
             {{ context.client?.[E_CLIENT_KEYS.REGISTRATION_DATE] | date: 'dd/MM/yyyy' }}
           </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="d-flex mb-4 w-100"
+    *ngIf="context.client && context.clientReservations && context.suites"
+  >
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-6">
+          <h4 class="mb-3">Client's Reservations</h4>
+          <ul class="list-group">
+            <a
+              *ngFor="let reservation of context.clientReservations"
+              [routerLink]="[
+                '/reservations/form',
+                reservation[E_RESERVATION_KEYS.ID]
+              ]"
+              class="list-group-item list-group-item-action"
+            >
+              <div class="d-flex flex-column">
+                <h6 class="mb-1">
+                  <fa-icon
+                    class="me-1"
+                    [icon]="getReservationStatusIcon(reservation)"
+                    [style.color]="getReservationStatusIconColor(reservation)"
+                  ></fa-icon>
+                  {{
+                    formatSuite(
+                      context.suites
+                        | findCollection
+                          : E_SUITE_KEYS.SUITE_NUMBER
+                          : reservation[E_RESERVATION_KEYS.SUITE_NUMBER]
+                    )
+                  }}
+                </h6>
+                <span>
+                  {{
+                    reservation[E_RESERVATION_KEYS.ARRIVAL]
+                      | date : "dd/MM/yyyy"
+                  }}
+                  -
+                  {{
+                    reservation[E_RESERVATION_KEYS.DEPARTURE]
+                      | date : "dd/MM/yyyy"
+                  }}
+                </span>
+              </div>
+            </a>
+          </ul>
         </div>
       </div>
     </div>
