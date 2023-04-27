@@ -7,27 +7,35 @@
   "
 >
   <h4 class="mb-4">Reservations Table</h4>
-  <div class="d-flex mb-4" [formGroup]="form">
-    <div class="me-2">
-      <label for="client" class="form-label">Client Passport</label>
-      <input
-        type="text"
-        class="form-control"
-        id="client"
-        formControlName="client"
-        appEmptyToNull
-      />
+  <div
+    class="d-flex w-100 mb-4 justify-content-between align-items-end"
+    [formGroup]="form"
+  >
+    <div class="d-flex">
+      <div class="me-2">
+        <label for="client" class="form-label">Client Passport</label>
+        <input
+          type="text"
+          class="form-control"
+          id="client"
+          formControlName="client"
+          appEmptyToNull
+        />
+      </div>
+      <div>
+        <label for="suite" class="form-label">Suite Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="suite"
+          formControlName="suite"
+          appEmptyToNull
+        />
+      </div>
     </div>
-    <div>
-      <label for="suite" class="form-label">Suite Number</label>
-      <input
-        type="text"
-        class="form-control"
-        id="suite"
-        formControlName="suite"
-        appEmptyToNull
-      />
-    </div>
+    <a routerLink="/reservations/form" class="btn btn-primary">
+      Create new reservation
+    </a>
   </div>
   <div class="table-container" *ngIf="context.reservations">
     <table class="table table-striped">
