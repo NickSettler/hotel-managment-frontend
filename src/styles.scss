@@ -1,1 +1,21 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/@ng-select/ng-select/scss/mixins";
+
+$ng-select-highlight: $primary;
+$ng-select-bg: $body-bg-dark;
+$ng-select-border: $border-color-dark;
+$ng-select-primary-text: $body-color-dark;
+$ng-select-selected: $body-tertiary-bg-dark;
+$ng-select-border-radius: $border-radius;
+
+$ng-select-marked: $body-secondary-bg-dark;
+
+$ng-select-height: 38px;
+
+$ng-select-dropdown-bg: $body-tertiary-bg-dark;
+$ng-select-dropdown-optgroup-text: $body-color-dark;
+$ng-select-dropdown-option-text: $body-color-dark;
+
+@import "node_modules/@ng-select/ng-select/scss/default.theme";
+
 $drawerWidth: 360px;
