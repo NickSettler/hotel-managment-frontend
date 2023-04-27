@@ -1,0 +1,63 @@
+<div
+  class="d-flex flex-column w-100"
+  *ngIf="
+    {
+      suiteTypes: suiteTypes$ | async
+    };
+    let context
+  "
+>
+  <h4 class="mb-4">Suites Table</h4>
+  <div class="d-flex justify-content-end align-items-end mb-4">
+    <a routerLink="/suites/types/form" class="btn btn-primary">
+      Add suite type
+    </a>
+  </div>
+  <div class="table-container overflow-x-auto w-100" *ngIf="context.suiteTypes">
+    <table class="table table-hover table-striped align-middle">
+      <thead>
+        <tr>
+          <td></td>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Capacity</td>
+          <td>Price</td>
+          <td>Rooms Count</td>
+          <td>Beds Count</td>
+          <td>Variant</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let type of context.suiteTypes">
+          <td>
+            {{ type[E_SUITE_TYPE_KEYS.ID] }}
+          </td>
+          <td>
+            {{ type[E_SUITE_TYPE_KEYS.NAME] }}
+          </td>
+          <td>
+            {{ type[E_SUITE_TYPE_KEYS.CAPACITY] }}
+          </td>
+          <td>
+            {{ type[E_SUITE_TYPE_KEYS.PRICE] }}
+          </td>
+          <td>
+            {{
+              type[E_SUITE_TYPE_KEYS.SPEC][E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT]
+            }}
+          </td>
+          <td>
+            {{
+              type[E_SUITE_TYPE_KEYS.SPEC][E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT]
+            }}
+          </td>
+          <td>
+            {{
+              type[E_SUITE_TYPE_KEYS.SPEC][E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT]
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
