@@ -1,0 +1,98 @@
+<form
+  class="container p-0"
+  [formGroup]="form"
+  *ngIf="
+    {
+      suiteTypes: (suiteTypes$ | async)
+    };
+    let context
+  "
+  (submit)="create($event)"
+>
+  <div class="row mb-2">
+    <div class="col">
+      <h4>Add Suite</h4>
+    </div>
+  </div>
+  <div class="row g-3 mb-3">
+    <div class="col-6">
+      <label [for]="E_SUITE_KEYS.SUITE_NUMBER" class="form-label">
+        Suite number
+      </label>
+      <input
+        [id]="E_SUITE_KEYS.SUITE_NUMBER"
+        class="form-control"
+        type="number"
+        [formControlName]="E_SUITE_KEYS.SUITE_NUMBER"
+        [class.is-invalid]="
+          form.get(E_SUITE_KEYS.SUITE_NUMBER)?.invalid &&
+          form.get(E_SUITE_KEYS.SUITE_NUMBER)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_SUITE_KEYS.SUITE_NUMBER)?.errors || null
+            | errorFormatter : "Suite number"
+        }}
+      </div>
+    </div>
+    <div class="col-6">
+      <label [for]="E_SUITE_KEYS.SUITE_TYPE_ID" class="form-label">
+        Suite type
+      </label>
+      <ng-select
+        [id]="E_SUITE_KEYS.SUITE_TYPE_ID"
+        [formControlName]="E_SUITE_KEYS.SUITE_TYPE_ID"
+        [items]="context.suiteTypes"
+        [searchable]="true"
+        [bindLabel]="E_SUITE_TYPE_KEYS.NAME"
+        [bindValue]="E_SUITE_TYPE_KEYS.ID"
+      >
+        <ng-template ng-option-tmp let-item="item">
+          {{ item[E_SUITE_TYPE_KEYS.NAME] }} ({{
+            item[E_SUITE_TYPE_KEYS.CAPACITY]
+          }}
+          people /
+          {{
+            item[E_SUITE_TYPE_KEYS.PRICE]
+              | currency : "CZK" : "symbol" : "1.2-2"
+          }})
+        </ng-template>
+      </ng-select>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          form.get(E_SUITE_KEYS.SUITE_TYPE_ID)?.invalid &&
+          form.get(E_SUITE_KEYS.SUITE_TYPE_ID)?.touched
+        "
+      >
+        {{
+          form.get(E_SUITE_KEYS.SUITE_TYPE_ID)?.errors || null
+            | errorFormatter : "Suite type"
+        }}
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [id]="E_SUITE_KEYS.SUITE_STATUS"
+          [formControlName]="E_SUITE_KEYS.SUITE_STATUS"
+        />
+        <label [for]="E_SUITE_KEYS.SUITE_STATUS" class="form-check-label">
+          Suite is available
+        </label>
+        <div class="invalid-feedback">
+          {{
+            form.get(E_SUITE_KEYS.SUITE_STATUS)?.errors || null
+              | errorFormatter : "Suite status"
+          }}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  </div>
+</form>
