@@ -29,3 +29,8 @@ export const getAvailableCapacity = createSelector(
   getSuitesState,
   (state: ISuitesState) => state.capacity.available
 );
+
+export const getSuiteTypes = createSelector(
+  getSuitesState,
+  (state: ISuitesState) => state.suiteTypes
+);

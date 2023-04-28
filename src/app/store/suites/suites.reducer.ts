@@ -4,6 +4,7 @@ import {
   getCapacitySuccessAction,
   getSuitesAction,
   getSuitesSuccessAction,
+  getSuiteTypesSuccessAction,
 } from "./suites.actions";
 
 const initialState: ISuitesState = {
@@ -30,6 +31,13 @@ export const SuitesReducer = createReducer(
     (state, { payload }): ISuitesState => ({
       ...state,
       capacity: payload,
+    })
+  ),
+  on(
+    getSuiteTypesSuccessAction,
+    (state, { payload }): ISuitesState => ({
+      ...state,
+      suiteTypes: payload,
     })
   )
 );

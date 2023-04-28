@@ -1,27 +1,38 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { SuitesService } from "../../services/suites.service";
 import {
+  createSuiteAction,
+  createSuiteFailureAction,
+  createSuiteSuccessAction,
+  createSuiteTypeAction,
+  createSuiteTypeFailureAction,
+  createSuiteTypeSuccessAction,
   getCapacityAction,
   getCapacitySuccessAction,
   getSuitesAction,
   getSuitesFailureAction,
   getSuitesSuccessAction,
+  getSuiteTypesAction,
+  getSuiteTypesFailureAction,
+  getSuiteTypesSuccessAction,
   setSuiteStatusAction,
   setSuiteStatusSuccessAction,
 } from "./suites.actions";
 import { catchError, combineLatest, map, mergeMap, of, switchMap } from "rxjs";
-import { ICapacity, ISuite } from "./suites.types";
+import { ICapacity, ISuite, ISuiteType } from "./suites.types";
 import { Injectable } from "@angular/core";
+import { SuiteTypesService } from "../../services/suite-types.service";
 
 @Injectable()
 export class SuitesEffects {
   constructor(
-    private actions$: Actions,
-    private suitesService: SuitesService
+    private actions: Actions,
+    private suitesService: SuitesService,
+    private suiteTypesService: SuiteTypesService
   ) {}
 
   getSuites$ = createEffect(() => {
-    return this.actions$.pipe(
+    return this.actions.pipe(
       ofType(getSuitesAction),
       switchMap(() =>
         this.suitesService.getSuites().pipe(
@@ -32,8 +43,23 @@ export class SuitesEffects {
     );
   });
 
+  createClient$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(createSuiteAction),
+      mergeMap(({ payload }) =>
+        this.suitesService.createSuite(payload).pipe(
+          map(() => {
+            getSuitesAction();
+            return createSuiteSuccessAction();
+          }),
+          catchError((error) => of(createSuiteFailureAction(error)))
+        )
+      )
+    );
+  });
+
   getCapacity$ = createEffect(() => {
-    return this.actions$.pipe(
+    return this.actions.pipe(
       ofType(getCapacityAction),
       switchMap(({ payload }) =>
         combineLatest([
@@ -56,7 +82,7 @@ export class SuitesEffects {
   });
 
   setSuiteStatus$ = createEffect(() => {
-    return this.actions$.pipe(
+    return this.actions.pipe(
       ofType(setSuiteStatusAction),
       mergeMap(({ payload }) =>
         this.suitesService
@@ -70,9 +96,38 @@ export class SuitesEffects {
   });
 
   setSuiteStatusSuccess$ = createEffect(() => {
-    return this.actions$.pipe(
+    return this.actions.pipe(
       ofType(setSuiteStatusSuccessAction),
       mergeMap(() => of(getSuitesAction()))
+    );
+  });
+
+  getSuiteTypes$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(getSuiteTypesAction),
+      switchMap(() =>
+        this.suiteTypesService.getSuiteTypes().pipe(
+          map((suiteTypes: Array<ISuiteType>) =>
+            getSuiteTypesSuccessAction(suiteTypes)
+          ),
+          catchError((error) => of(getSuiteTypesFailureAction(error)))
+        )
+      )
+    );
+  });
+
+  createSuiteType$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(createSuiteTypeAction),
+      mergeMap(({ payload }) =>
+        this.suiteTypesService.createSuiteType(payload).pipe(
+          map(() => {
+            getSuiteTypesAction();
+            return createSuiteTypeSuccessAction();
+          }),
+          catchError((error) => of(createSuiteTypeFailureAction(error)))
+        )
+      )
     );
   });
 }
