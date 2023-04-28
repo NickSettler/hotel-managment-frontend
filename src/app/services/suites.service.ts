@@ -2,11 +2,14 @@ import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
 import { Observable } from "rxjs";
 import {
+  E_SUITE_KEYS,
   E_SUITE_STATUS,
   ICapacity,
   ISuite,
 } from "../store/suites/suites.types";
 import { E_RESERVATION_KEYS } from "../store/reservations/reservations.types";
+
+export type ICreateSuiteBody = Omit<ISuite, E_SUITE_KEYS.SUITE_TYPE>;
 
 @Injectable({
   providedIn: "root",
@@ -19,6 +22,13 @@ export class SuitesService {
   getSuites(): Observable<Array<ISuite>> {
     return this.apiService.get({
       path: SuitesService.PATH,
+    });
+  }
+
+  createSuite(suite: Partial<ICreateSuiteBody>): Observable<ISuite> {
+    return this.apiService.post({
+      path: SuitesService.PATH,
+      body: suite,
     });
   }
 
