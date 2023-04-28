@@ -41,6 +41,11 @@ import { SuiteViewComponent } from "./views/suites-view/suites-table-view/suite-
 import { FindCollectionPipe } from "./pipes/find-collection.pipe";
 import { StopPropagationDirective } from "./directives/stop-propagation.directive";
 import { SuiteDropdownMenuComponent } from "./components/suite-dropdown-menu/suite-dropdown-menu.component";
+import { ReservationsFormComponent } from "./views/reservations-form/reservations-form.component";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { SuitesFormComponent } from "./views/suites-form/suites-form.component";
+import { SuiteTypesTableViewComponent } from "./views/suites-view/suite-types-table-view/suite-types-table-view.component";
+import { SuiteTypesFormComponent } from "./views/suite-types-form/suite-types-form.component";
 
 const startUpFactory = (configService: ConfigService) => {
   return () => configService.load().then(() => console.log("Config loaded"));
@@ -89,8 +94,12 @@ const routes: Routes = [
     component: ReservationsStatsViewComponent,
   },
   {
-    path: "reservations/:id",
-    component: ReservationsTableViewComponent,
+    path: "reservations/form",
+    component: ReservationsFormComponent,
+  },
+  {
+    path: "reservations/form/:id",
+    component: ReservationsFormComponent,
   },
   {
     path: "suites",
@@ -103,6 +112,22 @@ const routes: Routes = [
   {
     path: "suites/table",
     component: SuitesTableViewComponent,
+  },
+  {
+    path: "suites/types",
+    component: SuiteTypesTableViewComponent,
+  },
+  {
+    path: "suites/types/form",
+    component: SuiteTypesFormComponent,
+  },
+  {
+    path: "suites/types/form/:id",
+    component: SuiteTypesFormComponent,
+  },
+  {
+    path: "suites/form",
+    component: SuitesFormComponent,
   },
   {
     path: "suites/:suiteNumber",
@@ -138,6 +163,10 @@ const routes: Routes = [
     FindCollectionPipe,
     StopPropagationDirective,
     SuiteDropdownMenuComponent,
+    ReservationsFormComponent,
+    SuitesFormComponent,
+    SuiteTypesTableViewComponent,
+    SuiteTypesFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -158,6 +187,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     NgxMasonryModule,
     ReactiveFormsModule,
+    NgSelectModule,
     FormsModule,
     FontAwesomeModule,
   ],
