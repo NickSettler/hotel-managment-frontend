@@ -1,0 +1,159 @@
+<form
+  class="container p-0"
+  [formGroup]="form"
+  *ngIf="
+    {
+      suiteTypes: (suiteTypes$ | async)
+    };
+    let context
+  "
+  (submit)="create($event)"
+>
+  <div class="row mb-2">
+    <div class="col">
+      <h4>Add Suite Type</h4>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-4">
+      <label [for]="[E_SUITE_TYPE_KEYS.NAME]" class="form-label"> Name </label>
+      <input
+        [id]="E_SUITE_TYPE_KEYS.NAME"
+        type="text"
+        class="form-control"
+        [formControlName]="E_SUITE_TYPE_KEYS.NAME"
+        [class.is-invalid]="
+          form.get(E_SUITE_TYPE_KEYS.NAME)?.invalid &&
+          form.get(E_SUITE_TYPE_KEYS.NAME)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_SUITE_TYPE_KEYS.NAME)?.errors || null
+            | errorFormatter : "Name"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label [for]="[E_SUITE_TYPE_KEYS.CAPACITY]" class="form-label">
+        Capacity
+      </label>
+      <input
+        [id]="E_SUITE_TYPE_KEYS.CAPACITY"
+        type="number"
+        class="form-control"
+        [formControlName]="E_SUITE_TYPE_KEYS.CAPACITY"
+        [class.is-invalid]="
+          form.get(E_SUITE_TYPE_KEYS.CAPACITY)?.invalid &&
+          form.get(E_SUITE_TYPE_KEYS.CAPACITY)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_SUITE_TYPE_KEYS.CAPACITY)?.errors || null
+            | errorFormatter : "Capacity"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label [for]="[E_SUITE_TYPE_KEYS.PRICE]" class="form-label">
+        Price
+      </label>
+      <input
+        [id]="E_SUITE_TYPE_KEYS.PRICE"
+        type="number"
+        class="form-control"
+        [formControlName]="E_SUITE_TYPE_KEYS.PRICE"
+        [class.is-invalid]="
+          form.get(E_SUITE_TYPE_KEYS.PRICE)?.invalid &&
+          form.get(E_SUITE_TYPE_KEYS.PRICE)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_SUITE_TYPE_KEYS.PRICE)?.errors || null
+            | errorFormatter : "Price"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label [for]="[E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT]" class="form-label">
+        Rooms count
+      </label>
+      <input
+        [id]="E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT"
+        type="number"
+        class="form-control"
+        [formControlName]="E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT"
+        [class.is-invalid]="
+          form.get(E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT)?.invalid &&
+          form.get(E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_SUITE_TYPE_SPEC_KEYS.ROOMS_COUNT)?.errors || null
+            | errorFormatter : "Rooms count"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label [for]="[E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT]" class="form-label">
+        Beds count
+      </label>
+      <input
+        [id]="E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT"
+        type="number"
+        class="form-control"
+        [formControlName]="E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT"
+        [class.is-invalid]="
+          form.get(E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT)?.invalid &&
+          form.get(E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT)?.touched
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.get(E_SUITE_TYPE_SPEC_KEYS.BEDS_COUNT)?.errors || null
+            | errorFormatter : "Beds count"
+        }}
+      </div>
+    </div>
+    <div class="col-4">
+      <label [for]="[E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT]" class="form-label">
+        Variant
+      </label>
+      <select
+        [id]="E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT"
+        class="form-select"
+        [formControlName]="E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT"
+        [class.is-invalid]="
+          form.get(E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT)?.invalid &&
+          form.get(E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT)?.touched
+        "
+      >
+        <option
+          *ngFor="let variant of values(E_SUITE_TYPE_SPEC_VARIANT)"
+          [value]="variant"
+        >
+          {{ variant }}
+        </option>
+      </select>
+      <div
+        class="invalid-feedback"
+        *ngIf="
+          form.get(E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT)?.invalid &&
+          form.get(E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT)?.touched
+        "
+      >
+        {{
+          form.get(E_SUITE_TYPE_SPEC_KEYS.SUITE_VARIANT)?.errors || null
+            | errorFormatter : "Variant"
+        }}
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  </div>
+</form>
