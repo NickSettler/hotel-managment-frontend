@@ -1,0 +1,77 @@
+<form
+  class="container p-0"
+  [formGroup]="reservationForm"
+  *ngIf="
+    {
+      clients: clients$ | async,
+      suites: suites$ | async
+    };
+    let context
+  "
+>
+  <div class="row mb-2">
+    <div class="col">
+      <h4>Add Reservation</h4>
+    </div>
+  </div>
+  <div class="row g-3 mb-3">
+    <div class="col-6">
+      <label [for]="E_RESERVATION_KEYS.CLIENT_PASSPORT" class="form-label">
+        Client
+      </label>
+      <ng-select
+        [id]="E_RESERVATION_KEYS.CLIENT_PASSPORT"
+        [items]="context.clients"
+        [searchable]="true"
+        [bindLabel]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+        [bindValue]="E_CLIENT_KEYS.PASSPORT_NUMBER"
+      />
+    </div>
+    <div class="col-6">
+      <label [for]="E_RESERVATION_KEYS.SUITE_NUMBER" class="form-label">
+        Suite
+      </label>
+      <ng-select
+        [id]="E_RESERVATION_KEYS.SUITE_NUMBER"
+        [items]="context.clients"
+        [searchable]="true"
+        [bindLabel]="E_SUITE_KEYS.SUITE_NUMBER"
+        [bindValue]="E_SUITE_KEYS.SUITE_NUMBER"
+      />
+      <ng-template ng-option-tmp let-item="item">
+        {{ item[E_SUITE_KEYS.SUITE_NUMBER] }} -
+        {{ item[E_SUITE_KEYS.SUITE_TYPE][E_SUITE_TYPE_KEYS.NAME] }}
+      </ng-template>
+    </div>
+    <div class="col-4">
+      <label [for]="E_RESERVATION_KEYS.ARRIVAL" class="form-label">
+        Arrival
+      </label>
+      <input
+        [id]="E_RESERVATION_KEYS.ARRIVAL"
+        type="date"
+        class="form-control"
+        [formControlName]="E_RESERVATION_KEYS.ARRIVAL"
+        [class.is-invalid]="
+          reservationForm.get(E_RESERVATION_KEYS.ARRIVAL)?.invalid &&
+          reservationForm.get(E_RESERVATION_KEYS.ARRIVAL)?.touched
+        "
+      />
+    </div>
+    <div class="col-4">
+      <label [for]="E_RESERVATION_KEYS.DEPARTURE" class="form-label">
+        Arrival
+      </label>
+      <input
+        [id]="E_RESERVATION_KEYS.DEPARTURE"
+        type="date"
+        class="form-control"
+        [formControlName]="E_RESERVATION_KEYS.DEPARTURE"
+        [class.is-invalid]="
+          reservationForm.get(E_RESERVATION_KEYS.DEPARTURE)?.invalid &&
+          reservationForm.get(E_RESERVATION_KEYS.DEPARTURE)?.touched
+        "
+      />
+    </div>
+  </div>
+</form>
