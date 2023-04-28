@@ -8,19 +8,21 @@
   "
 >
   <h4 class="mb-4">Suites Table</h4>
-  <div class="d-flex justify-content-between mb-4" [formGroup]="filterForm">
-    <div class="d-flex">
-      <div>
-        <label for="suiteNumber" class="form-label">Suite Number</label>
-        <input
-          type="text"
-          class="form-control"
-          id="suiteNumber"
-          formControlName="suiteNumber"
-          appEmptyToNull
-        />
-      </div>
+  <div
+    class="d-flex justify-content-between align-items-end mb-4"
+    [formGroup]="filterForm"
+  >
+    <div>
+      <label for="suiteNumber" class="form-label">Suite Number</label>
+      <input
+        type="text"
+        class="form-control"
+        id="suiteNumber"
+        formControlName="suiteNumber"
+        appEmptyToNull
+      />
     </div>
+    <a routerLink="/suites/form" class="btn btn-primary">Add suite</a>
   </div>
   <div class="table-container overflow-x-auto w-100" *ngIf="context.suites">
     <table class="table table-hover table-striped align-middle">
